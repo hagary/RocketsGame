@@ -30,11 +30,13 @@ GLuint defaultProg;
 GLint texSampler;
 
 // Texture constants
-#define NO_TEXTURES 4
+#define NO_TEXTURES 6
 #define SPACE 0
 #define EXIT 1
 #define GAME_OVER_BG 2
 #define GAME_START_BG 3
+#define TIME_MODE 4
+#define ONE_SHOT_MODE 5
 
 
 #define EXIT_WIDTH 80
@@ -54,7 +56,7 @@ int game_mode=GAME_START;
 GLuint tex_ids[NO_TEXTURES];
 
 // Texture files
-char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png"};
+char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png","Resources/time-mode.png","Resources/oneshot-mode.png"};
 
 //Game *Game::game = NULL;
 Player *player =  new Player(500,500,playerColor);
@@ -112,7 +114,7 @@ void run(int argc, char** argr){
     
     // Associate and assign sampler parameter
     texSampler = glGetUniformLocation(textureProg,"texMap");
-    SoundEngine->play2D("Resources/breakout.mp3", GL_TRUE);
+//    SoundEngine->play2D("Resources/breakout.mp3", GL_TRUE);
     
     glutMainLoop();
 }
@@ -120,7 +122,7 @@ void run(int argc, char** argr){
 void display(){
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if(game_mode==TIME_GAME)
+    if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME)
         drawTimeGame();
     if(game_mode==GAME_OVER)
         drawGameOver();
@@ -132,7 +134,63 @@ void display(){
     
 }
 void drawGameStart(){
+    drawExit();
+    drawGameModes();
     drawBackground(GAME_START_BG);
+}
+
+void drawGameModes(){
+    /* 
+     ----------------------
+     DRAW TIME MODE
+     ----------------------
+     */
+    glPushMatrix();
+    // TODO: Bind space texture
+    // Activate shader program
+    glUseProgram(textureProg);
+    glUniform1i(texSampler,0);
+    
+    glBindTexture(GL_TEXTURE_2D,tex_ids[TIME_MODE]);
+    
+    // TODO: Draw space background with texture coordinates
+    glBegin(GL_POLYGON);
+    glTexCoord2f(0.0f,0.0f);    glVertex3f(150,300,0);
+    glTexCoord2f(1.0f,0.0f);    glVertex3f(350,300,0);
+    glTexCoord2f(1.0f,1.0f);    glVertex3f(350,500,0);
+    glTexCoord2f(0.0f,1.0f);    glVertex3f(150,500,0);
+    glEnd();
+    glPopMatrix();
+    
+    /*
+     -----END-----
+    */
+    
+    
+    /*
+     ----------------------
+     DRAW ONE SHOT MODE
+     ----------------------
+     */
+    glPushMatrix();
+    // TODO: Bind space texture
+    // Activate shader program
+    glUseProgram(textureProg);
+    glUniform1i(texSampler,0);
+    
+    glBindTexture(GL_TEXTURE_2D,tex_ids[ONE_SHOT_MODE]);
+    // TODO: Draw space background with texture coordinates
+    glBegin(GL_POLYGON);
+    glTexCoord2f(0.0f,0.0f);    glVertex3f(650,300,0);
+    glTexCoord2f(1.0f,0.0f);    glVertex3f(850,300,0);
+    glTexCoord2f(1.0f,1.0f);    glVertex3f(850,500,0);
+    glTexCoord2f(0.0f,1.0f);    glVertex3f(650,500,0);
+    glEnd();
+    glPopMatrix();
+    
+    /*
+     -----END-----
+     */
 }
 void drawTimeGame(){
     glUseProgram(defaultProg);
@@ -252,7 +310,7 @@ void drawBackground(int bg){
 }
 void passM(int mouseX,int mouseY)
 {
-    if(game_mode==TIME_GAME){
+    if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
         
         double winH =glutGet(GLUT_WINDOW_HEIGHT);
         double winW =glutGet(GLUT_WINDOW_WIDTH);
@@ -272,17 +330,30 @@ void passM(int mouseX,int mouseY)
 
 void mouseClicks(int button, int state, int mouseX, int mouseY){
     if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+        /* Readjust coordinate system */
+        double winH =glutGet(GLUT_WINDOW_HEIGHT);
+        double winW =glutGet(GLUT_WINDOW_WIDTH);
+        mouseX  = mouseX/winW*1024;
+        mouseY= 720 - mouseY/winH*720;
+        
         testExitClicked(mouseX, mouseY);
+        
+        if(game_mode==GAME_START){
+            testModeClicked(mouseX,mouseY);
+        }
     }
 }
-
+void testModeClicked(int mouseX, int mouseY){
+    if(mouseX>150 && mouseX<350 && mouseY>300 && mouseY<500){
+        game_mode=TIME_GAME;
+        return;
+    }
+    if(mouseX>650 && mouseX<850 && mouseY>300 && mouseY<500){
+        game_mode=ONE_SHOT_GAME;
+        return;
+    }
+}
 void testExitClicked(int mouseX, int mouseY){
-    
-    double winH =glutGet(GLUT_WINDOW_HEIGHT);
-    double winW =glutGet(GLUT_WINDOW_WIDTH);
-    mouseX  = mouseX/winW*1024;
-    mouseY= 720 - mouseY/winH*720;
-    
     if(mouseX<EXIT_WIDTH && mouseY> 720 - EXIT_HEIGHT){
         //click within exit button
         printf("exit requested \n");
@@ -308,10 +379,9 @@ void testTouch(){
         SoundEngine->play2D("Resources/smash.mp3", false);
         score-=10;
     }
-    
 }
 void anim(){
-    if(game_mode==TIME_GAME){
+    if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
         chaser1->translate(player->x, player->y);
         chaser2->translate(player->x, player->y);
         testTouch();

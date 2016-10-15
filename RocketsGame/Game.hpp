@@ -24,10 +24,12 @@ bool load_textures();
 void drawBackground(int);
 void drawExit();
 void drawGameStart();
+void drawGameModes();
 void drawTime();
 void drawGameOver();
 void drawScore();
 void testExitClicked(int , int );
+void testModeClicked(int , int );
 void drawRocket(Rocket*);
 void drawTimeGame();
 #endif /* Game_hpp */

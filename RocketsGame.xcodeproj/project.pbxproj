@@ -22,7 +22,7 @@
 		0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240F01DB2D22500EC5DDF /* basicvert.vs */; };
 		0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241011DB2D22500EC5DDF /* texturefrag.fs */; };
 		0EFC22981DB2D7E0007380E6 /* texturevert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241021DB2D22500EC5DDF /* texturevert.vs */; };
-		0EFC229C1DB2E4C4007380E6 /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
+		0EFC229D1DB2E970007380E6 /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
 		4FCAFFAB179D6B410096B8FA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAA179D6B410096B8FA /* Cocoa.framework */; };
 		4FCAFFAF179D6B570096B8FA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAE179D6B570096B8FA /* OpenGL.framework */; };
 		4FCAFFB1179D6B660096B8FA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFB0179D6B660096B8FA /* CoreFoundation.framework */; };
@@ -36,7 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				0EFC229C1DB2E4C4007380E6 /* Resources in Copy Files */,
+				0EFC229D1DB2E970007380E6 /* Resources in Copy Files */,
 				0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */,
 				0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */,
 				0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */,
@@ -68,7 +68,6 @@
 		0E3240FA1DB2D22500EC5DDF /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = RocketsGame/Makefile; sourceTree = SOURCE_ROOT; };
 		0E3240FB1DB2D22500EC5DDF /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = RocketsGame/Player.cpp; sourceTree = SOURCE_ROOT; };
 		0E3240FC1DB2D22500EC5DDF /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Player.hpp; path = RocketsGame/Player.hpp; sourceTree = SOURCE_ROOT; };
-		0E3240FD1DB2D22500EC5DDF /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = RocketsGame/Resources; sourceTree = SOURCE_ROOT; };
 		0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rocket.cpp; path = RocketsGame/Rocket.cpp; sourceTree = SOURCE_ROOT; };
 		0E3240FF1DB2D22500EC5DDF /* Rocket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Rocket.hpp; path = RocketsGame/Rocket.hpp; sourceTree = SOURCE_ROOT; };
 		0E3241001DB2D22500EC5DDF /* shaderutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shaderutils.h; path = RocketsGame/shaderutils.h; sourceTree = SOURCE_ROOT; };
@@ -142,7 +141,6 @@
 				0E3240FA1DB2D22500EC5DDF /* Makefile */,
 				0E3240FB1DB2D22500EC5DDF /* Player.cpp */,
 				0E3240FC1DB2D22500EC5DDF /* Player.hpp */,
-				0E3240FD1DB2D22500EC5DDF /* Resources */,
 				0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */,
 				0E3240FF1DB2D22500EC5DDF /* Rocket.hpp */,
 				0E3241001DB2D22500EC5DDF /* shaderutils.h */,
