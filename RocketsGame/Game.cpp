@@ -305,18 +305,23 @@ void testExitClicked(int mouseX, int mouseY){
     
 }
 void testTouch(){
-    if(fabs(chased1->x - player->x )<= 1*rocketScaleX && fabs(chased1->y-player->y)<=2*rocketScaleY)
+    if(fabs(chased1->x - player->x )<= 1*rocketScaleX && fabs(chased1->y-player->y)<=2*rocketScaleY){
+        SoundEngine->play2D("Resources/ding.wav", false);
         score+=10;
-    if(fabs(chased2->x - player->x )<= 1*rocketScaleX && fabs(chased2->y-player->y)<=2*rocketScaleY)
-        SoundEngine->play2D("Resources/smash.mp3", false);
+    }
+    if(fabs(chased2->x - player->x )<= 1*rocketScaleX && fabs(chased2->y-player->y)<=2*rocketScaleY){
+        SoundEngine->play2D("Resources/ding.wav", false);
         score+=10;
+    }
     
     if(fabs(chaser1->x - player->x )<= 1*rocketScaleX && fabs(chaser1->y-player->y)<=2*rocketScaleY){
         SoundEngine->play2D("Resources/smash.mp3", false);
         score-=10;
     }
-    if(fabs(chaser2->x - player->x )<= 1*rocketScaleX && fabs(chaser2->y-player->y)<=2*rocketScaleY)
+    if(fabs(chaser2->x - player->x )<= 1*rocketScaleX && fabs(chaser2->y-player->y)<=2*rocketScaleY){
+        SoundEngine->play2D("Resources/smash.mp3", false);
         score-=10;
+    }
     
 }
 void anim(){

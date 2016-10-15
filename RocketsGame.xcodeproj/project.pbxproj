@@ -17,12 +17,12 @@
 		0E3241061DB2D22500EC5DDF /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FA1DB2D22500EC5DDF /* Makefile */; settings = {ASSET_TAGS = (); }; };
 		0E3241071DB2D22500EC5DDF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FB1DB2D22500EC5DDF /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
 		0E3241081DB2D22500EC5DDF /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */; settings = {ASSET_TAGS = (); }; };
-		0E32410A1DB2D4C800EC5DDF /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
 		0E9BEA051DB2B9D3002562FA /* libSOIL.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 4FCAFFB2179D6B7B0096B8FA /* libSOIL.a */; };
 		0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240EF1DB2D22500EC5DDF /* basicfrag.fs */; };
 		0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240F01DB2D22500EC5DDF /* basicvert.vs */; };
 		0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241011DB2D22500EC5DDF /* texturefrag.fs */; };
 		0EFC22981DB2D7E0007380E6 /* texturevert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241021DB2D22500EC5DDF /* texturevert.vs */; };
+		0EFC22991DB2DE6F007380E6 /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
 		4FCAFFAB179D6B410096B8FA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAA179D6B410096B8FA /* Cocoa.framework */; };
 		4FCAFFAF179D6B570096B8FA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAE179D6B570096B8FA /* OpenGL.framework */; };
 		4FCAFFB1179D6B660096B8FA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFB0179D6B660096B8FA /* CoreFoundation.framework */; };
@@ -36,11 +36,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				0EFC22991DB2DE6F007380E6 /* Resources in Copy Files */,
 				0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */,
 				0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */,
 				0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */,
 				0EFC22981DB2D7E0007380E6 /* texturevert.vs in Copy Files */,
-				0E32410A1DB2D4C800EC5DDF /* Resources in Copy Files */,
 				0E3240EC1DB2CB6D00EC5DDF /* ikpMP3.dylib in Copy Files */,
 				0E3240ED1DB2CB6D00EC5DDF /* libirrklang.dylib in Copy Files */,
 				0E9BEA051DB2B9D3002562FA /* libSOIL.a in Copy Files */,
