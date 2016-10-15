@@ -1,0 +1,325 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0E1EF3D11DB268EE00D33BBE /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAC179D6B480096B8FA /* GLUT.framework */; };
+		0E3240E81DB2C8D900EC5DDF /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E3240E51DB2C8D900EC5DDF /* libirrklang.dylib */; };
+		0E3240EC1DB2CB6D00EC5DDF /* ikpMP3.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240E41DB2C8D900EC5DDF /* ikpMP3.dylib */; };
+		0E3240ED1DB2CB6D00EC5DDF /* libirrklang.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240E51DB2C8D900EC5DDF /* libirrklang.dylib */; };
+		0E3241031DB2D22500EC5DDF /* Chased.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240F11DB2D22500EC5DDF /* Chased.cpp */; settings = {ASSET_TAGS = (); }; };
+		0E3241041DB2D22500EC5DDF /* Chaser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240F31DB2D22500EC5DDF /* Chaser.cpp */; settings = {ASSET_TAGS = (); }; };
+		0E3241051DB2D22500EC5DDF /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240F81DB2D22500EC5DDF /* Game.cpp */; settings = {ASSET_TAGS = (); }; };
+		0E3241061DB2D22500EC5DDF /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FA1DB2D22500EC5DDF /* Makefile */; settings = {ASSET_TAGS = (); }; };
+		0E3241071DB2D22500EC5DDF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FB1DB2D22500EC5DDF /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
+		0E3241081DB2D22500EC5DDF /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */; settings = {ASSET_TAGS = (); }; };
+		0E32410A1DB2D4C800EC5DDF /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
+		0E9BEA051DB2B9D3002562FA /* libSOIL.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 4FCAFFB2179D6B7B0096B8FA /* libSOIL.a */; };
+		0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240EF1DB2D22500EC5DDF /* basicfrag.fs */; };
+		0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240F01DB2D22500EC5DDF /* basicvert.vs */; };
+		0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241011DB2D22500EC5DDF /* texturefrag.fs */; };
+		0EFC22981DB2D7E0007380E6 /* texturevert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241021DB2D22500EC5DDF /* texturevert.vs */; };
+		4FCAFFAB179D6B410096B8FA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAA179D6B410096B8FA /* Cocoa.framework */; };
+		4FCAFFAF179D6B570096B8FA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAE179D6B570096B8FA /* OpenGL.framework */; };
+		4FCAFFB1179D6B660096B8FA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFB0179D6B660096B8FA /* CoreFoundation.framework */; };
+		4FCAFFB3179D6B7B0096B8FA /* libSOIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFB2179D6B7B0096B8FA /* libSOIL.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4FCAFF92179D6A970096B8FA /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */,
+				0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */,
+				0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */,
+				0EFC22981DB2D7E0007380E6 /* texturevert.vs in Copy Files */,
+				0E32410A1DB2D4C800EC5DDF /* Resources in Copy Files */,
+				0E3240EC1DB2CB6D00EC5DDF /* ikpMP3.dylib in Copy Files */,
+				0E3240ED1DB2CB6D00EC5DDF /* libirrklang.dylib in Copy Files */,
+				0E9BEA051DB2B9D3002562FA /* libSOIL.a in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0E3240E41DB2C8D900EC5DDF /* ikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = ikpMP3.dylib; path = "../irrKlang-64bit-1.5.0/bin/macosx-gcc/ikpMP3.dylib"; sourceTree = "<group>"; };
+		0E3240E51DB2C8D900EC5DDF /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = "../irrKlang-64bit-1.5.0/bin/macosx-gcc/libirrklang.dylib"; sourceTree = "<group>"; };
+		0E3240EE1DB2CFDA00EC5DDF /* irrklang */ = {isa = PBXFileReference; lastKnownFileType = folder; path = irrklang; sourceTree = "<group>"; };
+		0E3240EF1DB2D22500EC5DDF /* basicfrag.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basicfrag.fs; path = RocketsGame/basicfrag.fs; sourceTree = SOURCE_ROOT; };
+		0E3240F01DB2D22500EC5DDF /* basicvert.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = basicvert.vs; path = RocketsGame/basicvert.vs; sourceTree = SOURCE_ROOT; };
+		0E3240F11DB2D22500EC5DDF /* Chased.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Chased.cpp; path = RocketsGame/Chased.cpp; sourceTree = SOURCE_ROOT; };
+		0E3240F21DB2D22500EC5DDF /* Chased.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Chased.hpp; path = RocketsGame/Chased.hpp; sourceTree = SOURCE_ROOT; };
+		0E3240F31DB2D22500EC5DDF /* Chaser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Chaser.cpp; path = RocketsGame/Chaser.cpp; sourceTree = SOURCE_ROOT; };
+		0E3240F41DB2D22500EC5DDF /* Chaser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Chaser.hpp; path = RocketsGame/Chaser.hpp; sourceTree = SOURCE_ROOT; };
+		0E3240F51DB2D22500EC5DDF /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = RocketsGame/constants.h; sourceTree = SOURCE_ROOT; };
+		0E3240F61DB2D22500EC5DDF /* CS370_Lab19.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CS370_Lab19.vcxproj; path = RocketsGame/CS370_Lab19.vcxproj; sourceTree = SOURCE_ROOT; };
+		0E3240F71DB2D22500EC5DDF /* CS370_Lab19.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CS370_Lab19.vcxproj.filters; path = RocketsGame/CS370_Lab19.vcxproj.filters; sourceTree = SOURCE_ROOT; };
+		0E3240F81DB2D22500EC5DDF /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = RocketsGame/Game.cpp; sourceTree = SOURCE_ROOT; };
+		0E3240F91DB2D22500EC5DDF /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Game.hpp; path = RocketsGame/Game.hpp; sourceTree = SOURCE_ROOT; };
+		0E3240FA1DB2D22500EC5DDF /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = RocketsGame/Makefile; sourceTree = SOURCE_ROOT; };
+		0E3240FB1DB2D22500EC5DDF /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = RocketsGame/Player.cpp; sourceTree = SOURCE_ROOT; };
+		0E3240FC1DB2D22500EC5DDF /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Player.hpp; path = RocketsGame/Player.hpp; sourceTree = SOURCE_ROOT; };
+		0E3240FD1DB2D22500EC5DDF /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = RocketsGame/Resources; sourceTree = SOURCE_ROOT; };
+		0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rocket.cpp; path = RocketsGame/Rocket.cpp; sourceTree = SOURCE_ROOT; };
+		0E3240FF1DB2D22500EC5DDF /* Rocket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Rocket.hpp; path = RocketsGame/Rocket.hpp; sourceTree = SOURCE_ROOT; };
+		0E3241001DB2D22500EC5DDF /* shaderutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shaderutils.h; path = RocketsGame/shaderutils.h; sourceTree = SOURCE_ROOT; };
+		0E3241011DB2D22500EC5DDF /* texturefrag.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = texturefrag.fs; path = RocketsGame/texturefrag.fs; sourceTree = SOURCE_ROOT; };
+		0E3241021DB2D22500EC5DDF /* texturevert.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = texturevert.vs; path = RocketsGame/texturevert.vs; sourceTree = SOURCE_ROOT; };
+		0E3241091DB2D4B500EC5DDF /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = RocketsGame/Resources; sourceTree = SOURCE_ROOT; };
+		4FCAFF94179D6A970096B8FA /* RocketsGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RocketsGame; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FCAFFAA179D6B410096B8FA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4FCAFFAC179D6B480096B8FA /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		4FCAFFAE179D6B570096B8FA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		4FCAFFB0179D6B660096B8FA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4FCAFFB2179D6B7B0096B8FA /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = ../../../../usr/local/lib/libSOIL.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4FCAFF91179D6A970096B8FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E3240E81DB2C8D900EC5DDF /* libirrklang.dylib in Frameworks */,
+				0E1EF3D11DB268EE00D33BBE /* GLUT.framework in Frameworks */,
+				4FCAFFB3179D6B7B0096B8FA /* libSOIL.a in Frameworks */,
+				4FCAFFB1179D6B660096B8FA /* CoreFoundation.framework in Frameworks */,
+				4FCAFFAF179D6B570096B8FA /* OpenGL.framework in Frameworks */,
+				4FCAFFAB179D6B410096B8FA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4FCAFF8B179D6A970096B8FA = {
+			isa = PBXGroup;
+			children = (
+				0E3240EE1DB2CFDA00EC5DDF /* irrklang */,
+				0E3240E41DB2C8D900EC5DDF /* ikpMP3.dylib */,
+				0E3240E51DB2C8D900EC5DDF /* libirrklang.dylib */,
+				4FCAFFB2179D6B7B0096B8FA /* libSOIL.a */,
+				4FCAFFB0179D6B660096B8FA /* CoreFoundation.framework */,
+				4FCAFFAE179D6B570096B8FA /* OpenGL.framework */,
+				4FCAFFAC179D6B480096B8FA /* GLUT.framework */,
+				4FCAFFAA179D6B410096B8FA /* Cocoa.framework */,
+				4FCAFF96179D6A970096B8FA /* RocketsGame */,
+				4FCAFF95179D6A970096B8FA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4FCAFF95179D6A970096B8FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FCAFF94179D6A970096B8FA /* RocketsGame */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FCAFF96179D6A970096B8FA /* RocketsGame */ = {
+			isa = PBXGroup;
+			children = (
+				0E3241091DB2D4B500EC5DDF /* Resources */,
+				0E3240EF1DB2D22500EC5DDF /* basicfrag.fs */,
+				0E3240F01DB2D22500EC5DDF /* basicvert.vs */,
+				0E3240F11DB2D22500EC5DDF /* Chased.cpp */,
+				0E3240F21DB2D22500EC5DDF /* Chased.hpp */,
+				0E3240F31DB2D22500EC5DDF /* Chaser.cpp */,
+				0E3240F41DB2D22500EC5DDF /* Chaser.hpp */,
+				0E3240F51DB2D22500EC5DDF /* constants.h */,
+				0E3240F61DB2D22500EC5DDF /* CS370_Lab19.vcxproj */,
+				0E3240F71DB2D22500EC5DDF /* CS370_Lab19.vcxproj.filters */,
+				0E3240F81DB2D22500EC5DDF /* Game.cpp */,
+				0E3240F91DB2D22500EC5DDF /* Game.hpp */,
+				0E3240FA1DB2D22500EC5DDF /* Makefile */,
+				0E3240FB1DB2D22500EC5DDF /* Player.cpp */,
+				0E3240FC1DB2D22500EC5DDF /* Player.hpp */,
+				0E3240FD1DB2D22500EC5DDF /* Resources */,
+				0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */,
+				0E3240FF1DB2D22500EC5DDF /* Rocket.hpp */,
+				0E3241001DB2D22500EC5DDF /* shaderutils.h */,
+				0E3241011DB2D22500EC5DDF /* texturefrag.fs */,
+				0E3241021DB2D22500EC5DDF /* texturevert.vs */,
+			);
+			name = RocketsGame;
+			path = CS370_Lab19;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4FCAFF93179D6A970096B8FA /* CS370_Lab19 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4FCAFF9D179D6A970096B8FA /* Build configuration list for PBXNativeTarget "CS370_Lab19" */;
+			buildPhases = (
+				4FCAFF90179D6A970096B8FA /* Sources */,
+				4FCAFF91179D6A970096B8FA /* Frameworks */,
+				4FCAFF92179D6A970096B8FA /* Copy Files */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CS370_Lab19;
+			productName = CS370_Lab19;
+			productReference = 4FCAFF94179D6A970096B8FA /* RocketsGame */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4FCAFF8C179D6A970096B8FA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Hagar Yasser Omar";
+			};
+			buildConfigurationList = 4FCAFF8F179D6A970096B8FA /* Build configuration list for PBXProject "RocketsGame" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4FCAFF8B179D6A970096B8FA;
+			productRefGroup = 4FCAFF95179D6A970096B8FA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4FCAFF93179D6A970096B8FA /* CS370_Lab19 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4FCAFF90179D6A970096B8FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E3241081DB2D22500EC5DDF /* Rocket.cpp in Sources */,
+				0E3241061DB2D22500EC5DDF /* Makefile in Sources */,
+				0E3241041DB2D22500EC5DDF /* Chaser.cpp in Sources */,
+				0E3241071DB2D22500EC5DDF /* Player.cpp in Sources */,
+				0E3241051DB2D22500EC5DDF /* Game.cpp in Sources */,
+				0E3241031DB2D22500EC5DDF /* Chased.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4FCAFF9B179D6A970096B8FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4FCAFF9C179D6A970096B8FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4FCAFF9E179D6A970096B8FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = OSX;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INFOPLIST_FILE = RocketsGame;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = RocketsGame;
+			};
+			name = Debug;
+		};
+		4FCAFF9F179D6A970096B8FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = OSX;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INFOPLIST_FILE = RocketsGame;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = RocketsGame;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4FCAFF8F179D6A970096B8FA /* Build configuration list for PBXProject "RocketsGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FCAFF9B179D6A970096B8FA /* Debug */,
+				4FCAFF9C179D6A970096B8FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4FCAFF9D179D6A970096B8FA /* Build configuration list for PBXNativeTarget "CS370_Lab19" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FCAFF9E179D6A970096B8FA /* Debug */,
+				4FCAFF9F179D6A970096B8FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4FCAFF8C179D6A970096B8FA /* Project object */;
+}
