@@ -22,7 +22,7 @@
 		0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240F01DB2D22500EC5DDF /* basicvert.vs */; };
 		0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241011DB2D22500EC5DDF /* texturefrag.fs */; };
 		0EFC22981DB2D7E0007380E6 /* texturevert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241021DB2D22500EC5DDF /* texturevert.vs */; };
-		0EFC22991DB2DE6F007380E6 /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
+		0EFC229C1DB2E4C4007380E6 /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
 		4FCAFFAB179D6B410096B8FA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAA179D6B410096B8FA /* Cocoa.framework */; };
 		4FCAFFAF179D6B570096B8FA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFAE179D6B570096B8FA /* OpenGL.framework */; };
 		4FCAFFB1179D6B660096B8FA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCAFFB0179D6B660096B8FA /* CoreFoundation.framework */; };
@@ -36,7 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				0EFC22991DB2DE6F007380E6 /* Resources in Copy Files */,
+				0EFC229C1DB2E4C4007380E6 /* Resources in Copy Files */,
 				0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */,
 				0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */,
 				0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */,

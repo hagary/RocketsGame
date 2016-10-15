@@ -30,10 +30,12 @@ GLuint defaultProg;
 GLint texSampler;
 
 // Texture constants
-#define NO_TEXTURES 3
+#define NO_TEXTURES 4
 #define SPACE 0
 #define EXIT 1
-#define GAME_OVER 3
+#define GAME_OVER_BG 2
+#define GAME_START_BG 3
+
 
 #define EXIT_WIDTH 80
 #define EXIT_HEIGHT 90
@@ -46,13 +48,13 @@ GLint texSampler;
 #define GAME_START 3
 #define SPECIAL_POWER 4
 
-int game_mode=TIME_GAME;
+int game_mode=GAME_START;
 
 // Texture indices
 GLuint tex_ids[NO_TEXTURES];
 
 // Texture files
-char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png"};
+char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png"};
 
 //Game *Game::game = NULL;
 Player *player =  new Player(500,500,playerColor);
@@ -122,11 +124,15 @@ void display(){
         drawTimeGame();
     if(game_mode==GAME_OVER)
         drawGameOver();
-    
+    if(game_mode==GAME_START)
+        drawGameStart();
     glFlush();
     // Swap buffers
     glutSwapBuffers();
     
+}
+void drawGameStart(){
+    drawBackground(GAME_START_BG);
 }
 void drawTimeGame(){
     glUseProgram(defaultProg);
@@ -141,7 +147,7 @@ void drawTimeGame(){
     drawTime();
     drawScore();
     
-    drawBackground();
+    drawBackground(SPACE);
 }
 void drawTime(){
     /*----- Display Time Elapsed -------------------
@@ -216,31 +222,11 @@ void drawExit(){
 void drawGameOver(){
     drawExit();
     drawScore();
-    // Draw textured quad
-    glPushMatrix();
-    // TODO: Bind space texture
-    // Activate shader program
-    glUseProgram(textureProg);
-    glUniform1i(texSampler,0);
-    
-    glBindTexture(GL_TEXTURE_2D,tex_ids[GAME_OVER]);
-    
-    // TODO: Draw space background with texture coordinates
-    glBegin(GL_POLYGON);
-    glTexCoord2f(0.0f,0.0f);
-    glVertex3f(0,0,0);
-    glTexCoord2f(1.0f,0.0f);
-    glVertex3f(1024,0,0);
-    glTexCoord2f(1.0f,1.0f);
-    glVertex3f(1024,720,0);
-    glTexCoord2f(0.0f,1.0f);
-    glVertex3f(0,720,0);
-    glEnd();
-    glPopMatrix();
+    drawBackground(GAME_OVER_BG);
     
 }
 
-void drawBackground(){
+void drawBackground(int bg){
     // Draw textured quad
     glPushMatrix();
     // TODO: Bind space texture
@@ -248,7 +234,7 @@ void drawBackground(){
     glUseProgram(textureProg);
     glUniform1i(texSampler,0);
     
-    glBindTexture(GL_TEXTURE_2D,tex_ids[SPACE]);
+    glBindTexture(GL_TEXTURE_2D,tex_ids[bg]);
     
     // TODO: Draw space background with texture coordinates
     glBegin(GL_POLYGON);
