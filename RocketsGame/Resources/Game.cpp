@@ -7,7 +7,15 @@
 //
 
 #include "Game.hpp"
-
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <SOIL/SOIL.h>
+// Shader file utility functions
+#include "shaderutils.h"
+#include "constants.h"
 
 
 // Shader files
@@ -22,16 +30,13 @@ GLuint defaultProg;
 GLint texSampler;
 
 // Texture constants
-#define NO_TEXTURES 9
+#define NO_TEXTURES 6
 #define SPACE 0
 #define EXIT 1
 #define GAME_OVER_BG 2
 #define GAME_START_BG 3
 #define TIME_MODE 4
 #define ONE_SHOT_MODE 5
-#define SPECIAL_POWER_BG 6
-#define DOUBLE_SCORE_BG 7
-#define CHASER_STUN_BG 8
 
 
 #define EXIT_WIDTH 80
@@ -45,25 +50,27 @@ GLint texSampler;
 #define GAME_START 3
 #define SPECIAL_POWER 4
 
+int game_mode=GAME_START;
 
 // Texture indices
 GLuint tex_ids[NO_TEXTURES];
 
 // Texture files
-char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png","Resources/time-mode.png","Resources/oneshot-mode.png","Resources/special-power.png","Resources/double-score.png","Resources/chaser-stun.png"};
+char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png","Resources/time-mode.png","Resources/oneshot-mode.png"};
 
 //Game *Game::game = NULL;
-Player *player ;
-Chaser *chaser1 ;
-Chaser *chaser2 ;
-Chased *chased1 ;
-Chased *chased2;
+Player *player =  new Player(500,500,playerColor);
+Chaser *chaser1 = new Chaser(100,100,chaserColor);
+Chaser *chaser2 = new Chaser(800,100, chaserColor);
+Chased *chased1 = new Chased(250,250,chasedColor);
+Chased *chased2 = new Chased(750,250, chasedColor);
 
-// game status
-int game_mode;
-int score;
-long timeSinceStart;
-ISoundEngine *SoundEngine;
+int score = INITIAL_SCORE;
+
+#include <irrklang/irrKlang.h>
+using namespace irrklang;
+
+ISoundEngine *SoundEngine = createIrrKlangDevice();
 
 int main(int argc, char** argr){
     init();
@@ -71,25 +78,11 @@ int main(int argc, char** argr){
     return 0;
 }
 void init(){
-    //initialize game objects
-    player =  new Player(500,500,playerColor);
-    chaser1 = new Chaser(100,100,chaserColor);
-    chaser2 = new Chaser(800,100, chaserColor);
-    chased1 = new Chased(250,250,chasedColor);
-    chased2 = new Chased(750,250, chasedColor);
-    
-    //initialize chaser&chased velocities
     chaser1->vel=chaser1Vel;
     chaser2->vel=chaser2Vel;
+    
     chased1->vel=chased1Vel;
     chased2->vel=chased2Vel;
-    
-    //initialize game mode
-    game_mode = GAME_START;
-    
-    //initialize sound engine
-   SoundEngine = createIrrKlangDevice();
-
 }
 
 void run(int argc, char** argr){
@@ -105,7 +98,7 @@ void run(int argc, char** argr){
     glClearColor(1.0f,0.0f,0.0f,0.0f);
     glutPassiveMotionFunc(passM);
     glutMouseFunc(mouseClicks);
-    glutGet(GLUT_ELAPSED_TIME);
+    
     glutIdleFunc(anim);
     gluOrtho2D(0.0, 1024, 0.0, 720);
     // Set shading model
@@ -121,49 +114,35 @@ void run(int argc, char** argr){
     
     // Associate and assign sampler parameter
     texSampler = glGetUniformLocation(textureProg,"texMap");
-    SoundEngine->play2D("Resources/breakout.mp3", GL_TRUE);
+    //    SoundEngine->play2D("Resources/breakout.mp3", GL_TRUE);
     
     glutMainLoop();
 }
 
 void display(){
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    drawExit();
-    
     if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME)
         drawTimeGame();
     if(game_mode==GAME_OVER)
         drawGameOver();
     if(game_mode==GAME_START)
         drawGameStart();
-    if(game_mode==SPECIAL_POWER)
-        drawSpecialPower();
     glFlush();
     // Swap buffers
     glutSwapBuffers();
     
 }
-
-/*
- -------------------------
- DRAW FUNCTIONS
- -------------------------
- */
 void drawGameStart(){
-    drawOptions(TIME_MODE, ONE_SHOT_MODE);
+    drawExit();
+    drawGameModes();
     drawBackground(GAME_START_BG);
 }
 
-void drawSpecialPower(){
-    drawOptions(DOUBLE_SCORE_BG, CHASER_STUN_BG);
-    drawBackground(SPECIAL_POWER_BG);
-}
-
-void drawOptions(int option1, int option2){
+void drawGameModes(){
     /*
      ----------------------
-     DRAW OPTION 1: TIME MODE OR DOUBLE SCORE
+     DRAW TIME MODE
      ----------------------
      */
     glPushMatrix();
@@ -172,7 +151,7 @@ void drawOptions(int option1, int option2){
     glUseProgram(textureProg);
     glUniform1i(texSampler,0);
     
-    glBindTexture(GL_TEXTURE_2D,tex_ids[option1]);
+    glBindTexture(GL_TEXTURE_2D,tex_ids[TIME_MODE]);
     
     // TODO: Draw space background with texture coordinates
     glBegin(GL_POLYGON);
@@ -190,7 +169,7 @@ void drawOptions(int option1, int option2){
     
     /*
      ----------------------
-     DRAW OPTION 2: ONE SHOT OR CHASER STUN
+     DRAW ONE SHOT MODE
      ----------------------
      */
     glPushMatrix();
@@ -199,7 +178,7 @@ void drawOptions(int option1, int option2){
     glUseProgram(textureProg);
     glUniform1i(texSampler,0);
     
-    glBindTexture(GL_TEXTURE_2D,tex_ids[option2]);
+    glBindTexture(GL_TEXTURE_2D,tex_ids[ONE_SHOT_MODE]);
     // TODO: Draw space background with texture coordinates
     glBegin(GL_POLYGON);
     glTexCoord2f(0.0f,0.0f);    glVertex3f(650,300,0);
@@ -213,7 +192,6 @@ void drawOptions(int option1, int option2){
      -----END-----
      */
 }
-
 void drawTimeGame(){
     glUseProgram(defaultProg);
     drawRocket(player);
@@ -221,6 +199,8 @@ void drawTimeGame(){
     drawRocket(chaser2);
     drawRocket(chased1);
     drawRocket(chased2);
+    
+    drawExit();
     
     drawTime();
     drawScore();
@@ -231,7 +211,7 @@ void drawTime(){
     /*----- Display Time Elapsed -------------------
      */
     glUseProgram(0);
-    int totalSecs =int((glutGet(GLUT_ELAPSED_TIME)-timeSinceStart)/1000);
+    int totalSecs =int(glutGet(GLUT_ELAPSED_TIME)/1000);
     std::string secs= std:: to_string(totalSecs%60);
     std::string mins=std:: to_string(int(totalSecs/60));
     if(mins == GAME_DURATION)
@@ -257,7 +237,7 @@ void drawScore(){
      */
     
     //calculate
-    std::string playerScore= "SCORE "+ std:: to_string(score);
+    std::string playerScore= std:: to_string(score);
     
     //display
     glUseProgram(0);
@@ -298,6 +278,7 @@ void drawExit(){
     
 }
 void drawGameOver(){
+    drawExit();
     drawScore();
     drawBackground(GAME_OVER_BG);
     
@@ -327,14 +308,6 @@ void drawBackground(int bg){
     glPopMatrix();
     
 }
-
-/*--------------------END--------------------*/
-
-/*
- ----------------------------
- CONTROL FUNCTIONS
- ----------------------------
- */
 void passM(int mouseX,int mouseY)
 {
     if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
@@ -365,36 +338,19 @@ void mouseClicks(int button, int state, int mouseX, int mouseY){
         
         testExitClicked(mouseX, mouseY);
         
-        if(game_mode==GAME_START || game_mode==SPECIAL_POWER){
-            testOptionClicked(mouseX,mouseY);
+        if(game_mode==GAME_START){
+            testModeClicked(mouseX,mouseY);
         }
     }
 }
-void testOptionClicked(int mouseX, int mouseY){
+void testModeClicked(int mouseX, int mouseY){
     if(mouseX>150 && mouseX<350 && mouseY>300 && mouseY<500){
-        if(game_mode==GAME_START)
-        {
-            game_mode=TIME_GAME;
-            score=2000;
-            timeSinceStart=glutGet(GLUT_ELAPSED_TIME);
-            return;
-        }
-        if(game_mode==SPECIAL_POWER)
-        {
-            //TODO:DOUBLE SCORE OPTION CLICKED
-        }
+        game_mode=TIME_GAME;
+        return;
     }
     if(mouseX>650 && mouseX<850 && mouseY>300 && mouseY<500){
-        if(game_mode==GAME_START)
-        {
-            game_mode=ONE_SHOT_GAME;
-            score=0;
-            return;
-        }
-        if(game_mode==SPECIAL_POWER)
-        {
-            //TODO:CHASER STUN OPTION CLICKED
-        }
+        game_mode=ONE_SHOT_GAME;
+        return;
     }
 }
 void testExitClicked(int mouseX, int mouseY){
@@ -449,9 +405,6 @@ void anim(){
     }
     glutPostRedisplay();
 }
-
-/*--------------------END--------------------*/
-
 
 /*
  

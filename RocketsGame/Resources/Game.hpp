@@ -13,17 +13,6 @@
 #include "Player.hpp"
 #include "Chased.hpp"
 #include "Chaser.hpp"
-#include <stdio.h>
-#include <math.h>
-#include <iostream>
-#include <stdlib.h>
-#include <string.h>
-#include <SOIL/SOIL.h>
-// Shader file utility functions
-#include "shaderutils.h"
-#include "constants.h"
-#include <irrklang/irrKlang.h>
-using namespace irrklang;
 
 void run(int , char** );
 void display();
@@ -35,13 +24,12 @@ bool load_textures();
 void drawBackground(int);
 void drawExit();
 void drawGameStart();
+void drawGameModes();
 void drawTime();
 void drawGameOver();
-void drawSpecialPower();
-void drawOptions(int option1, int option2);
 void drawScore();
 void testExitClicked(int , int );
-void testOptionClicked(int , int );
+void testModeClicked(int , int );
 void drawRocket(Rocket*);
 void drawTimeGame();
 #endif /* Game_hpp */
