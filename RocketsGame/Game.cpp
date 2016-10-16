@@ -8,9 +8,11 @@
 
 #include "Game.hpp"
 
-
-
-// Shader files
+/*
+ -------------------
+ SHADERS FILES
+ -------------------
+*/
 GLchar* texVertexFile = "texturevert.vs";
 GLchar* texFragmentFile = "texturefrag.fs";
 GLchar* defaultVertexFile = "basicvert.vs";
@@ -21,7 +23,13 @@ GLuint textureProg;
 GLuint defaultProg;
 GLint texSampler;
 
-// Texture constants
+/*--------------------END--------------------*/
+
+/*
+ -------------------
+ TEXTURES VARIABLES
+ -------------------
+ */
 #define NO_TEXTURES 9
 #define SPACE 0
 #define EXIT 1
@@ -33,11 +41,17 @@ GLint texSampler;
 #define DOUBLE_SCORE_BG 7
 #define CHASER_STUN_BG 8
 
+// Texture indices
+GLuint tex_ids[NO_TEXTURES];
+
+// Texture files
+char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png","Resources/time-mode.png","Resources/oneshot-mode.png","Resources/special-power.png","Resources/double-score.png","Resources/chaser-stun.png"};
+
+/*--------------------END--------------------*/
+
 
 #define EXIT_WIDTH 80
 #define EXIT_HEIGHT 90
-
-
 
 #define TIME_GAME 0
 #define ONE_SHOT_GAME 1
@@ -45,14 +59,12 @@ GLint texSampler;
 #define GAME_START 3
 #define SPECIAL_POWER 4
 
+#define DOUBLE_SCORE 0
+#define CHASER_STUN 1
+#define READY 2
+#define USED 3
 
-// Texture indices
-GLuint tex_ids[NO_TEXTURES];
 
-// Texture files
-char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png","Resources/time-mode.png","Resources/oneshot-mode.png","Resources/special-power.png","Resources/double-score.png","Resources/chaser-stun.png"};
-
-//Game *Game::game = NULL;
 Player *player ;
 Chaser *chaser1 ;
 Chaser *chaser2 ;
@@ -62,14 +74,23 @@ Chased *chased2;
 // game status
 int game_mode;
 int score;
+int score_factor;
+int special_power;
 long timeSinceStart;
+long timeSinceSpecialPower;
 ISoundEngine *SoundEngine;
 
+/*
+ -------------------------
+ MAIN FUNCTIONS
+ -------------------------
+*/
 int main(int argc, char** argr){
     init();
     run(argc, argr);
     return 0;
 }
+
 void init(){
     //initialize game objects
     player =  new Player(500,500,playerColor);
@@ -86,6 +107,7 @@ void init(){
     
     //initialize game mode
     game_mode = GAME_START;
+    score_factor = 1;
     
     //initialize sound engine
    SoundEngine = createIrrKlangDevice();
@@ -144,12 +166,14 @@ void display(){
     glutSwapBuffers();
     
 }
+/*--------------------END--------------------*/
+
 
 /*
  -------------------------
  DRAW FUNCTIONS
  -------------------------
- */
+*/
 void drawGameStart(){
     drawOptions(TIME_MODE, ONE_SHOT_MODE);
     drawBackground(GAME_START_BG);
@@ -227,19 +251,27 @@ void drawTimeGame(){
     
     drawBackground(SPACE);
 }
+
 void drawTime(){
     /*----- Display Time Elapsed -------------------
      */
     glUseProgram(0);
-    int totalSecs =int((glutGet(GLUT_ELAPSED_TIME)-timeSinceStart)/1000);
-    std::string secs= std:: to_string(totalSecs%60);
-    std::string mins=std:: to_string(int(totalSecs/60));
-    if(mins == GAME_DURATION)
+    long totalSecs = long((glutGet(GLUT_ELAPSED_TIME)-timeSinceStart-timeSinceSpecialPower)/1000)+1;
+    int secsCount = totalSecs%60;
+    int minsCount = int(totalSecs/60);
+    if(totalSecs == 30){ //30 secs passed since game start
+        game_mode = SPECIAL_POWER;
+        timeSinceSpecialPower = glutGet(GLUT_ELAPSED_TIME);
+        return;
+    }
+    if(minsCount == GAME_DURATION)
     {
-        game_mode=GAME_OVER;
+        game_mode = GAME_OVER;
         //        glutPostRedisplay();
         return;
     }
+    std::string secs = std:: to_string(secsCount);
+    std::string mins = std:: to_string(minsCount);
     std::string time = mins +" : "+ secs;
     glColor3f(1.0f,1.0f,1.0f);
     glPushMatrix();
@@ -270,6 +302,7 @@ void drawScore(){
     }
     glPopMatrix();
 }
+
 void drawRocket(Rocket* r){
     glPushMatrix();
     r->transform();
@@ -297,6 +330,7 @@ void drawExit(){
     glPopMatrix();
     
 }
+
 void drawGameOver(){
     drawScore();
     drawBackground(GAME_OVER_BG);
@@ -330,11 +364,12 @@ void drawBackground(int bg){
 
 /*--------------------END--------------------*/
 
+
 /*
  ----------------------------
  CONTROL FUNCTIONS
  ----------------------------
- */
+*/
 void passM(int mouseX,int mouseY)
 {
     if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
@@ -355,6 +390,10 @@ void passM(int mouseX,int mouseY)
     }
 }
 
+void resetScoreFactor(int val){
+    score_factor=1;
+}
+
 void mouseClicks(int button, int state, int mouseX, int mouseY){
     if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
         /* Readjust coordinate system */
@@ -370,6 +409,7 @@ void mouseClicks(int button, int state, int mouseX, int mouseY){
         }
     }
 }
+
 void testOptionClicked(int mouseX, int mouseY){
     if(mouseX>150 && mouseX<350 && mouseY>300 && mouseY<500){
         if(game_mode==GAME_START)
@@ -382,6 +422,10 @@ void testOptionClicked(int mouseX, int mouseY){
         if(game_mode==SPECIAL_POWER)
         {
             //TODO:DOUBLE SCORE OPTION CLICKED
+            timeSinceSpecialPower=glutGet(GLUT_ELAPSED_TIME)-timeSinceSpecialPower;
+            score_factor=2;
+            glutTimerFunc(30*1000, resetScoreFactor, 0);
+            game_mode = TIME_GAME;
         }
     }
     if(mouseX>650 && mouseX<850 && mouseY>300 && mouseY<500){
@@ -397,6 +441,7 @@ void testOptionClicked(int mouseX, int mouseY){
         }
     }
 }
+
 void testExitClicked(int mouseX, int mouseY){
     if(mouseX<EXIT_WIDTH && mouseY> 720 - EXIT_HEIGHT){
         //click within exit button
@@ -405,14 +450,15 @@ void testExitClicked(int mouseX, int mouseY){
     }
     
 }
+
 void testTouch(){
     if(fabs(chased1->x - player->x )<= 1*rocketScaleX && fabs(chased1->y-player->y)<=2*rocketScaleY){
         SoundEngine->play2D("Resources/ding.wav", false);
-        score+=10;
+        score+=(score_factor*10);
     }
     if(fabs(chased2->x - player->x )<= 1*rocketScaleX && fabs(chased2->y-player->y)<=2*rocketScaleY){
         SoundEngine->play2D("Resources/ding.wav", false);
-        score+=10;
+        score+=(score_factor*10);
     }
     
     if(fabs(chaser1->x - player->x )<= 1*rocketScaleX && fabs(chaser1->y-player->y)<=2*rocketScaleY){
@@ -420,7 +466,7 @@ void testTouch(){
         if(game_mode==TIME_GAME)
         {
             SoundEngine->play2D("Resources/smash.mp3", false);
-            score-=10;
+            score-=(score_factor*10);
         }
         else
         {
@@ -432,7 +478,7 @@ void testTouch(){
         if(game_mode==TIME_GAME)
         {
             SoundEngine->play2D("Resources/smash.mp3", false);
-            score-=10;
+            score-=(score_factor*10);
         }
         else
         {
@@ -441,6 +487,7 @@ void testTouch(){
         }
     }
 }
+
 void anim(){
     if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
         chaser1->translate(player->x, player->y);
@@ -454,12 +501,10 @@ void anim(){
 
 
 /*
- 
  ----------------------------
  TEXTURES PART
  ----------------------------
- 
- */
+*/
 
 // Routine to load textures using SOIL
 bool load_textures()
@@ -490,6 +535,7 @@ bool load_textures()
     return true;
 }
 
+/*--------------------END--------------------*/
 
 
 

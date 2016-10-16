@@ -21,7 +21,7 @@ const int chaser2Vel =4;
 const int chased1Vel =8;
 const int chased2Vel =10;
 
-const std::string GAME_DURATION = "5";
+const int GAME_DURATION = 5; //in minutes
 
 const int INITIAL_SCORE = 2000;
 
