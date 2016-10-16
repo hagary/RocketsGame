@@ -77,7 +77,6 @@ int score;
 int score_factor;
 int special_power;
 long timeSinceStart;
-long timeSinceSpecialPower;
 ISoundEngine *SoundEngine;
 
 /*
@@ -256,12 +255,11 @@ void drawTime(){
     /*----- Display Time Elapsed -------------------
      */
     glUseProgram(0);
-    long totalSecs = long((glutGet(GLUT_ELAPSED_TIME)-timeSinceStart-timeSinceSpecialPower)/1000)+1;
+    long totalSecs = long((glutGet(GLUT_ELAPSED_TIME)-timeSinceStart)/1000);
     int secsCount = totalSecs%60;
     int minsCount = int(totalSecs/60);
-    if(totalSecs == 30){ //30 secs passed since game start
+    if(totalSecs == 10){ //30 secs passed since game start
         game_mode = SPECIAL_POWER;
-        timeSinceSpecialPower = glutGet(GLUT_ELAPSED_TIME);
         return;
     }
     if(minsCount == GAME_DURATION)
@@ -393,7 +391,10 @@ void passM(int mouseX,int mouseY)
 void resetScoreFactor(int val){
     score_factor=1;
 }
-
+void resetChaserVel(int val){
+    chaser1->vel = chaser1Vel;
+    chaser2->vel = chaser2Vel;
+}
 void mouseClicks(int button, int state, int mouseX, int mouseY){
     if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
         /* Readjust coordinate system */
@@ -421,8 +422,7 @@ void testOptionClicked(int mouseX, int mouseY){
         }
         if(game_mode==SPECIAL_POWER)
         {
-            //TODO:DOUBLE SCORE OPTION CLICKED
-            timeSinceSpecialPower=glutGet(GLUT_ELAPSED_TIME)-timeSinceSpecialPower;
+            //DOUBLE SCORE OPTION CLICKED
             score_factor=2;
             glutTimerFunc(30*1000, resetScoreFactor, 0);
             game_mode = TIME_GAME;
@@ -437,7 +437,12 @@ void testOptionClicked(int mouseX, int mouseY){
         }
         if(game_mode==SPECIAL_POWER)
         {
-            //TODO:CHASER STUN OPTION CLICKED
+            //CHASER STUN OPTION CLICKED
+            chaser1->vel = 0;
+            chaser2->vel = 0;
+            glutTimerFunc(30*1000, resetChaserVel, 0);
+            game_mode = TIME_GAME;
+            
         }
     }
 }
