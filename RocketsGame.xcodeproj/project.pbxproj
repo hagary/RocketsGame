@@ -14,6 +14,7 @@
 		0E3241061DB2D22500EC5DDF /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FA1DB2D22500EC5DDF /* Makefile */; settings = {ASSET_TAGS = (); }; };
 		0E3241071DB2D22500EC5DDF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FB1DB2D22500EC5DDF /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
 		0E3241081DB2D22500EC5DDF /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */; settings = {ASSET_TAGS = (); }; };
+		0E7DCA5E1DB500FF002CAE84 /* ikpMP3.dylib in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E7DCA5C1DB500F8002CAE84 /* ikpMP3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0ED1FA891DB4FE5B0059801E /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
 		0ED1FA8E1DB4FEDF0059801E /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED1FA8D1DB4FEDF0059801E /* libirrklang.dylib */; };
 		0ED1FA901DB4FEF10059801E /* libSOIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED1FA8F1DB4FEF10059801E /* libSOIL.a */; };
@@ -35,6 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				0E7DCA5E1DB500FF002CAE84 /* ikpMP3.dylib in Copy Files */,
 				0ED1FA911DB4FF030059801E /* libSOIL.a in Copy Files */,
 				0ED1FA921DB4FF030059801E /* libirrklang.dylib in Copy Files */,
 				0ED1FA891DB4FE5B0059801E /* Resources in Copy Files */,
@@ -70,6 +72,7 @@
 		0E3241011DB2D22500EC5DDF /* texturefrag.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = texturefrag.fs; path = RocketsGame/texturefrag.fs; sourceTree = SOURCE_ROOT; };
 		0E3241021DB2D22500EC5DDF /* texturevert.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = texturevert.vs; path = RocketsGame/texturevert.vs; sourceTree = SOURCE_ROOT; };
 		0E3241091DB2D4B500EC5DDF /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = RocketsGame/Resources; sourceTree = SOURCE_ROOT; };
+		0E7DCA5C1DB500F8002CAE84 /* ikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = ikpMP3.dylib; path = "irrKlang-64bit-1.5.0/bin/macosx-gcc/ikpMP3.dylib"; sourceTree = "<group>"; };
 		0ED1FA8D1DB4FEDF0059801E /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = "irrKlang-64bit-1.5.0/bin/macosx-gcc/libirrklang.dylib"; sourceTree = "<group>"; };
 		0ED1FA8F1DB4FEF10059801E /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSOIL.a; sourceTree = "<group>"; };
 		4FCAFF94179D6A970096B8FA /* RocketsGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RocketsGame; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +102,7 @@
 		4FCAFF8B179D6A970096B8FA = {
 			isa = PBXGroup;
 			children = (
+				0E7DCA5C1DB500F8002CAE84 /* ikpMP3.dylib */,
 				0ED1FA8F1DB4FEF10059801E /* libSOIL.a */,
 				0ED1FA8D1DB4FEDF0059801E /* libirrklang.dylib */,
 				0E3240EE1DB2CFDA00EC5DDF /* irrklang */,
