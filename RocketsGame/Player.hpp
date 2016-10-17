@@ -21,6 +21,7 @@ class Player : public Rocket{
 public:
     using Rocket::Rocket;
     void translate(double , double);
+    void rotate(double, double);
     
 };
 

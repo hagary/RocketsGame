@@ -21,6 +21,8 @@ public:
     using Rocket::Rocket;
     double vel;
     void translate(double, double);
+    void rotate(double, double);
+
 };
 
 #endif /* Chased_hpp */

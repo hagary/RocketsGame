@@ -30,3 +30,9 @@ void Chased::translate(double playerX, double playerY){
         
     }
 }
+void Chased::rotate(double playerX, double playerY){
+    double changeX = playerX - x;
+    double changeY = playerY - y;
+    double angle = atan2(changeY,changeX);
+    rotation =180+( -90 + (angle*180/M_PI));
+}

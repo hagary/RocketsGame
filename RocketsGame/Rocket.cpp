@@ -22,7 +22,7 @@ Rocket::Rocket(double x, double y,GLfloat rocketColor[3] ){
 }
 void Rocket::transform(){
     glTranslated(x,y,0);
-    //    glRotated(rotation, 0, 0, 1);
+    glRotated(rotation, 0, 0, 1);
 }
 void Rocket::rotate(double mouseX, double mouseY){
     double changeX = mouseX - x;

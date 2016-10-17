@@ -559,12 +559,17 @@ void passM(int mouseX,int mouseY)
         double winW =glutGet(GLUT_WINDOW_WIDTH);
         mouseX  = mouseX/winW*1024;
         mouseY= 720 - (mouseY/winH*720);
-        //    rotateRocket(updatedX, updatedY);
+        player->rotate(mouseX, mouseY);
         player->translate(mouseX, mouseY);
         chaser1->translate(player->x, player->y);
+        chaser1->rotate(player->x, player->y);
         chaser2->translate(player->x, player->y);
+        chaser2->rotate(player->x, player->y);
         chased1->translate(player->x, player->y);
+        chased1->rotate(player->x, player->y);
         chased2->translate(player->x, player->y);
+        chased2->rotate(player->x, player->y);
+
         //    translateChased();
         glutPostRedisplay();
         
@@ -582,9 +587,12 @@ void mouseClicks(int button, int state, int mouseX, int mouseY){
         
         if(game_mode==GAME_START || game_mode==SPECIAL_POWER){
             testOptionClicked(mouseX,mouseY);
+            if(game_mode==SPECIAL_POWER)
+                testNotNowClicked(mouseX, mouseY);
         }
         if(power_status == READY && (game_mode == TIME_GAME || game_mode == ONE_SHOT_GAME))
             testPowerClicked(mouseX, mouseY);
+        
     }
 }
 
@@ -592,6 +600,8 @@ void anim(){
     if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
         chaser1->translate(player->x, player->y);
         chaser2->translate(player->x, player->y);
+        chased1->translate(player->x, player->y);
+        chased2->translate(player->x, player->y);
         testTouch();
     }
     glutPostRedisplay();

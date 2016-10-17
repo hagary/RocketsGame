@@ -20,3 +20,10 @@ void Chaser::translate(double playerX, double playerY){
         y+=vel*advanceY;
     }
 }
+
+void Chaser::rotate(double playerX, double playerY){
+    double changeX = playerX - x;
+    double changeY = playerY - y;
+    double angle = atan2(changeY,changeX);
+    rotation = -90 + (angle*180/M_PI);
+}

@@ -11,3 +11,10 @@ void Player::translate(double mouseX, double mouseY){
     this->x = mouseX;
     this->y = mouseY;
 }
+
+void Player::rotate(double mouseX, double mouseY){
+    double changeX = mouseX - x;
+    double changeY = mouseY - y;
+    double angle = atan2(changeY,changeX);
+    rotation = -90 + (angle*180/M_PI);
+}
