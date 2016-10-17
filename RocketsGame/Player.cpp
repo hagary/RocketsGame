@@ -9,5 +9,5 @@
 #include "Player.hpp"
 void Player::translate(double mouseX, double mouseY){
     this->x = mouseX;
-    this->y = 720-mouseY;
+    this->y = mouseY;
 }

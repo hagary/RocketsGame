@@ -17,8 +17,8 @@
 		0E3241061DB2D22500EC5DDF /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FA1DB2D22500EC5DDF /* Makefile */; settings = {ASSET_TAGS = (); }; };
 		0E3241071DB2D22500EC5DDF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FB1DB2D22500EC5DDF /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
 		0E3241081DB2D22500EC5DDF /* Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3240FE1DB2D22500EC5DDF /* Rocket.cpp */; settings = {ASSET_TAGS = (); }; };
+		0E62CCC91DB4568400B8ACD2 /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
 		0E9BEA051DB2B9D3002562FA /* libSOIL.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 4FCAFFB2179D6B7B0096B8FA /* libSOIL.a */; };
-		0EAABB281DB3C05E00E25F2F /* Resources in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241091DB2D4B500EC5DDF /* Resources */; };
 		0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240EF1DB2D22500EC5DDF /* basicfrag.fs */; };
 		0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3240F01DB2D22500EC5DDF /* basicvert.vs */; };
 		0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E3241011DB2D22500EC5DDF /* texturefrag.fs */; };
@@ -36,7 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				0EAABB281DB3C05E00E25F2F /* Resources in Copy Files */,
+				0E62CCC91DB4568400B8ACD2 /* Resources in Copy Files */,
 				0EFC22951DB2D7E0007380E6 /* basicfrag.fs in Copy Files */,
 				0EFC22961DB2D7E0007380E6 /* basicvert.vs in Copy Files */,
 				0EFC22971DB2D7E0007380E6 /* texturefrag.fs in Copy Files */,

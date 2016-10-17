@@ -40,8 +40,10 @@ void drawGameOver();
 void drawSpecialPower();
 void drawOptions(int option1, int option2);
 void drawScore();
+void drawNotNowOption();
 void testExitClicked(int , int );
 void testOptionClicked(int , int );
 void drawRocket(Rocket*);
-void drawTimeGame();
+void drawGame();
+void drawPowerStatus();
 #endif /* Game_hpp */

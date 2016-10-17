@@ -30,7 +30,7 @@ GLint texSampler;
  TEXTURES VARIABLES
  -------------------
  */
-#define NO_TEXTURES 9
+#define NO_TEXTURES 13
 #define SPACE 0
 #define EXIT 1
 #define GAME_OVER_BG 2
@@ -40,12 +40,18 @@ GLint texSampler;
 #define SPECIAL_POWER_BG 6
 #define DOUBLE_SCORE_BG 7
 #define CHASER_STUN_BG 8
+#define POWER_ACTIVE_BG 9
+#define POWER_READY_BG 10
+#define POWER_USED_BG 11
+#define NOT_NOW_BG 12
+
+
 
 // Texture indices
 GLuint tex_ids[NO_TEXTURES];
 
 // Texture files
-char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png","Resources/time-mode.png","Resources/oneshot-mode.png","Resources/special-power.png","Resources/double-score.png","Resources/chaser-stun.png"};
+char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01.png","Resources/game-over.png","Resources/game-start.png","Resources/time-mode.png","Resources/oneshot-mode.png","Resources/special-power.png","Resources/double-score.png","Resources/chaser-stun.png", "Resources/active.png","Resources/ready.png","Resources/used.png", "Resources/not-now.png"};
 
 /*--------------------END--------------------*/
 
@@ -59,24 +65,32 @@ char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01
 #define GAME_START 3
 #define SPECIAL_POWER 4
 
-#define DOUBLE_SCORE 0
-#define CHASER_STUN 1
-#define READY 2
-#define USED 3
+#define ACTIVE 0
+#define READY 1
+#define USED 2
 
 
-Player *player ;
-Chaser *chaser1 ;
-Chaser *chaser2 ;
-Chased *chased1 ;
+Player *player;
+Chaser *chaser1;
+Chaser *chaser2;
+Chased *chased1;
 Chased *chased2;
 
-// game status
+/*
+ -------------------------
+ GAME STATUS VARIABLES
+ -------------------------
+ */
 int game_mode;
+int global_game_mode;
 int score;
 int score_factor;
-int special_power;
+int power_status;
 long timeSinceStart;
+/*--------------------END--------------------*/
+
+
+
 ISoundEngine *SoundEngine;
 
 /*
@@ -106,6 +120,7 @@ void init(){
     
     //initialize game mode
     game_mode = GAME_START;
+    power_status = READY;
     score_factor = 1;
     
     //initialize sound engine
@@ -116,13 +131,11 @@ void init(){
 void run(int argc, char** argr){
     glutInit(&argc, argr);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    // Set the window size to image size
     glutInitWindowSize(1024,720);
     glutInitWindowPosition(50, 50);
     glutCreateWindow("Catch Me");
     glutFullScreen();
     glutDisplayFunc(display);
-    // Set background color to black (...outer space!)
     glClearColor(1.0f,0.0f,0.0f,0.0f);
     glutPassiveMotionFunc(passM);
     glutMouseFunc(mouseClicks);
@@ -142,8 +155,12 @@ void run(int argc, char** argr){
     
     // Associate and assign sampler parameter
     texSampler = glGetUniformLocation(textureProg,"texMap");
+    
+    
+    //play track
     SoundEngine->play2D("Resources/breakout.mp3", GL_TRUE);
     
+    //start the display
     glutMainLoop();
 }
 
@@ -153,7 +170,7 @@ void display(){
     drawExit();
     
     if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME)
-        drawTimeGame();
+        drawGame();
     if(game_mode==GAME_OVER)
         drawGameOver();
     if(game_mode==GAME_START)
@@ -180,7 +197,26 @@ void drawGameStart(){
 
 void drawSpecialPower(){
     drawOptions(DOUBLE_SCORE_BG, CHASER_STUN_BG);
+    drawNotNowOption();
     drawBackground(SPECIAL_POWER_BG);
+}
+void drawNotNowOption(){
+    glPushMatrix();
+    // TODO: Bind  texture
+    // Activate shader program
+    glUseProgram(textureProg);
+    glUniform1i(texSampler,0);
+    
+    glBindTexture(GL_TEXTURE_2D,tex_ids[NOT_NOW_BG]);
+    
+    // TODO: Draw space background with texture coordinates
+    glBegin(GL_POLYGON);
+    glTexCoord2f(0.0f,0.0f);    glVertex3f(750,570,0);
+    glTexCoord2f(1.0f,0.0f);    glVertex3f(950,570,0);
+    glTexCoord2f(1.0f,1.0f);    glVertex3f(950,650,0);
+    glTexCoord2f(0.0f,1.0f);    glVertex3f(750,650,0);
+    glEnd();
+    glPopMatrix();
 }
 
 void drawOptions(int option1, int option2){
@@ -197,7 +233,6 @@ void drawOptions(int option1, int option2){
     
     glBindTexture(GL_TEXTURE_2D,tex_ids[option1]);
     
-    // TODO: Draw space background with texture coordinates
     glBegin(GL_POLYGON);
     glTexCoord2f(0.0f,0.0f);    glVertex3f(150,300,0);
     glTexCoord2f(1.0f,0.0f);    glVertex3f(350,300,0);
@@ -223,7 +258,6 @@ void drawOptions(int option1, int option2){
     glUniform1i(texSampler,0);
     
     glBindTexture(GL_TEXTURE_2D,tex_ids[option2]);
-    // TODO: Draw space background with texture coordinates
     glBegin(GL_POLYGON);
     glTexCoord2f(0.0f,0.0f);    glVertex3f(650,300,0);
     glTexCoord2f(1.0f,0.0f);    glVertex3f(850,300,0);
@@ -237,7 +271,7 @@ void drawOptions(int option1, int option2){
      */
 }
 
-void drawTimeGame(){
+void drawGame(){
     glUseProgram(defaultProg);
     drawRocket(player);
     drawRocket(chaser1);
@@ -247,6 +281,7 @@ void drawTimeGame(){
     
     drawTime();
     drawScore();
+    drawPowerStatus();
     
     drawBackground(SPACE);
 }
@@ -258,7 +293,7 @@ void drawTime(){
     long totalSecs = long((glutGet(GLUT_ELAPSED_TIME)-timeSinceStart)/1000);
     int secsCount = totalSecs%60;
     int minsCount = int(totalSecs/60);
-    if(totalSecs == 10){ //30 secs passed since game start
+    if(totalSecs == 30){ //30 secs passed since game start
         game_mode = SPECIAL_POWER;
         return;
     }
@@ -360,6 +395,34 @@ void drawBackground(int bg){
     
 }
 
+void drawPowerStatus(){
+    int texture;
+    if(power_status == ACTIVE)
+        texture = POWER_ACTIVE_BG;
+    else
+        if(power_status == READY)
+            texture = POWER_READY_BG;
+        else
+            texture = POWER_USED_BG;
+    
+    glPushMatrix();
+    // TODO: Bind  texture
+    // Activate shader program
+    glUseProgram(textureProg);
+    glUniform1i(texSampler,0);
+    
+    glBindTexture(GL_TEXTURE_2D,tex_ids[texture]);
+    
+    // TODO: Draw space background with texture coordinates
+    glBegin(GL_POLYGON);
+    glTexCoord2f(0.0f,0.0f);    glVertex3f(600,650,0);
+    glTexCoord2f(1.0f,0.0f);    glVertex3f(720,650,0);
+    glTexCoord2f(1.0f,1.0f);    glVertex3f(720,700,0);
+    glTexCoord2f(0.0f,1.0f);    glVertex3f(600,700,0);
+    glEnd();
+    glPopMatrix();
+}
+
 /*--------------------END--------------------*/
 
 
@@ -368,54 +431,29 @@ void drawBackground(int bg){
  CONTROL FUNCTIONS
  ----------------------------
 */
-void passM(int mouseX,int mouseY)
-{
-    if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
-        
-        double winH =glutGet(GLUT_WINDOW_HEIGHT);
-        double winW =glutGet(GLUT_WINDOW_WIDTH);
-        mouseX  = mouseX/winW*1024;
-        mouseY= mouseY/winH*720;
-        //    rotateRocket(updatedX, updatedY);
-        player->translate(mouseX, mouseY);
-        chaser1->translate(player->x, player->y);
-        chaser2->translate(player->x, player->y);
-        chased1->translate(player->x, player->y);
-        chased2->translate(player->x, player->y);
-        //    translateChased();
-        glutPostRedisplay();
-        
-    }
-}
 
+/*
+ -----------HELPER FUNCTIONS----------------
+*/
+void modifyPowerStatus(int new_status){
+    power_status = new_status;
+}
 void resetScoreFactor(int val){
     score_factor=1;
+    modifyPowerStatus(USED);
+
 }
 void resetChaserVel(int val){
     chaser1->vel = chaser1Vel;
     chaser2->vel = chaser2Vel;
+    modifyPowerStatus(USED);
 }
-void mouseClicks(int button, int state, int mouseX, int mouseY){
-    if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
-        /* Readjust coordinate system */
-        double winH =glutGet(GLUT_WINDOW_HEIGHT);
-        double winW =glutGet(GLUT_WINDOW_WIDTH);
-        mouseX  = mouseX/winW*1024;
-        mouseY= 720 - mouseY/winH*720;
-        
-        testExitClicked(mouseX, mouseY);
-        
-        if(game_mode==GAME_START || game_mode==SPECIAL_POWER){
-            testOptionClicked(mouseX,mouseY);
-        }
-    }
-}
-
 void testOptionClicked(int mouseX, int mouseY){
     if(mouseX>150 && mouseX<350 && mouseY>300 && mouseY<500){
         if(game_mode==GAME_START)
         {
-            game_mode=TIME_GAME;
+            game_mode = TIME_GAME;
+            global_game_mode = TIME_GAME;
             score=2000;
             timeSinceStart=glutGet(GLUT_ELAPSED_TIME);
             return;
@@ -424,15 +462,19 @@ void testOptionClicked(int mouseX, int mouseY){
         {
             //DOUBLE SCORE OPTION CLICKED
             score_factor=2;
+            modifyPowerStatus(ACTIVE);
+            game_mode = global_game_mode;
             glutTimerFunc(30*1000, resetScoreFactor, 0);
-            game_mode = TIME_GAME;
+            return;
         }
     }
     if(mouseX>650 && mouseX<850 && mouseY>300 && mouseY<500){
         if(game_mode==GAME_START)
         {
-            game_mode=ONE_SHOT_GAME;
+            timeSinceStart=glutGet(GLUT_ELAPSED_TIME);
             score=0;
+            game_mode=ONE_SHOT_GAME;
+            global_game_mode = ONE_SHOT_GAME;
             return;
         }
         if(game_mode==SPECIAL_POWER)
@@ -440,13 +482,14 @@ void testOptionClicked(int mouseX, int mouseY){
             //CHASER STUN OPTION CLICKED
             chaser1->vel = 0;
             chaser2->vel = 0;
+            modifyPowerStatus(ACTIVE);
+            game_mode = global_game_mode;
             glutTimerFunc(30*1000, resetChaserVel, 0);
-            game_mode = TIME_GAME;
+            return;
             
         }
     }
 }
-
 void testExitClicked(int mouseX, int mouseY){
     if(mouseX<EXIT_WIDTH && mouseY> 720 - EXIT_HEIGHT){
         //click within exit button
@@ -455,7 +498,6 @@ void testExitClicked(int mouseX, int mouseY){
     }
     
 }
-
 void testTouch(){
     if(fabs(chased1->x - player->x )<= 1*rocketScaleX && fabs(chased1->y-player->y)<=2*rocketScaleY){
         SoundEngine->play2D("Resources/ding.wav", false);
@@ -490,6 +532,59 @@ void testTouch(){
             game_mode=GAME_OVER;
             return;
         }
+    }
+}
+void testPowerClicked(int mouseX, int mouseY){
+    if(mouseX>600 && mouseX<720 && mouseY>650 && mouseY<700){
+        game_mode = SPECIAL_POWER;
+        return;
+    }
+}
+
+void testNotNowClicked(int mouseX, int mouseY){
+    if(mouseX>750 && mouseX<950 && mouseY>570 && mouseY<650){
+        game_mode = global_game_mode;
+        return;
+    }
+}
+
+/*
+ -----------INVOKED FUNCTIONS----------------
+ */
+void passM(int mouseX,int mouseY)
+{
+    if(game_mode==TIME_GAME || game_mode==ONE_SHOT_GAME){
+        
+        double winH =glutGet(GLUT_WINDOW_HEIGHT);
+        double winW =glutGet(GLUT_WINDOW_WIDTH);
+        mouseX  = mouseX/winW*1024;
+        mouseY= 720 - (mouseY/winH*720);
+        //    rotateRocket(updatedX, updatedY);
+        player->translate(mouseX, mouseY);
+        chaser1->translate(player->x, player->y);
+        chaser2->translate(player->x, player->y);
+        chased1->translate(player->x, player->y);
+        chased2->translate(player->x, player->y);
+        //    translateChased();
+        glutPostRedisplay();
+        
+    }
+}
+void mouseClicks(int button, int state, int mouseX, int mouseY){
+    if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+        /* Readjust coordinate system */
+        double winH =glutGet(GLUT_WINDOW_HEIGHT);
+        double winW =glutGet(GLUT_WINDOW_WIDTH);
+        mouseX  = mouseX/winW*1024;
+        mouseY= 720 - mouseY/winH*720;
+        
+        testExitClicked(mouseX, mouseY);
+        
+        if(game_mode==GAME_START || game_mode==SPECIAL_POWER){
+            testOptionClicked(mouseX,mouseY);
+        }
+        if(power_status == READY && (game_mode == TIME_GAME || game_mode == ONE_SHOT_GAME))
+            testPowerClicked(mouseX, mouseY);
     }
 }
 
