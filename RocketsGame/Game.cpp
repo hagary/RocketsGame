@@ -68,6 +68,7 @@ char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01
 #define ACTIVE 0
 #define READY 1
 #define USED 2
+#define OFF 3
 
 
 Player *player;
@@ -120,7 +121,7 @@ void init(){
     
     //initialize game mode
     game_mode = GAME_START;
-    power_status = READY;
+    power_status = OFF;
     score_factor = 1;
     
     //initialize sound engine
@@ -281,8 +282,8 @@ void drawGame(){
     
     drawTime();
     drawScore();
-    drawPowerStatus();
-    
+    if(power_status!=OFF)
+        drawPowerStatus();
     drawBackground(SPACE);
 }
 
@@ -544,6 +545,7 @@ void testPowerClicked(int mouseX, int mouseY){
 void testNotNowClicked(int mouseX, int mouseY){
     if(mouseX>750 && mouseX<950 && mouseY>570 && mouseY<650){
         game_mode = global_game_mode;
+        power_status = READY;
         return;
     }
 }
