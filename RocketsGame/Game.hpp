@@ -46,4 +46,5 @@ void testOptionClicked(int , int );
 void drawRocket(Rocket*);
 void drawGame();
 void drawPowerStatus();
+void testChased(Chased *chased);
 #endif /* Game_hpp */

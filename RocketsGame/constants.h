@@ -15,11 +15,11 @@
  GLfloat chaserColor[3]={25.0/255, 25.0/255, 112.0/255};
  GLfloat chasedColor[3]={0.6, 0.6, 0.6};
 
-const int chaser1Vel =8;
-const int chaser2Vel =4;
+const int chaser1Vel = 7;
+const int chaser2Vel = 3;
 
-const int chased1Vel =8;
-const int chased2Vel =10;
+const int chased1Vel = 6;
+const int chased2Vel = 3;
 
 const int GAME_DURATION = 5; //in minutes
 

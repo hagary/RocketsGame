@@ -65,10 +65,11 @@ char texture_files[NO_TEXTURES][30] = {"Resources/space.jpg","Resources/close-01
 #define GAME_START 3
 #define SPECIAL_POWER 4
 
-#define ACTIVE 0
-#define READY 1
-#define USED 2
-#define OFF 3
+#define CHASER_STUN 0
+#define DOUBLE_SCORE 1
+#define READY 2
+#define USED 3
+#define OFF 4
 
 
 Player *player;
@@ -88,6 +89,8 @@ int score;
 int score_factor;
 int power_status;
 long timeSinceStart;
+long startTimeSpecialPower;
+long endTimeSpecialPower;
 /*--------------------END--------------------*/
 
 
@@ -301,7 +304,6 @@ void drawTime(){
     if(minsCount == GAME_DURATION)
     {
         game_mode = GAME_OVER;
-        //        glutPostRedisplay();
         return;
     }
     std::string secs = std:: to_string(secsCount);
@@ -398,7 +400,7 @@ void drawBackground(int bg){
 
 void drawPowerStatus(){
     int texture;
-    if(power_status == ACTIVE)
+    if(power_status == CHASER_STUN || power_status == DOUBLE_SCORE)
         texture = POWER_ACTIVE_BG;
     else
         if(power_status == READY)
@@ -463,7 +465,7 @@ void testOptionClicked(int mouseX, int mouseY){
         {
             //DOUBLE SCORE OPTION CLICKED
             score_factor=2;
-            modifyPowerStatus(ACTIVE);
+            modifyPowerStatus(DOUBLE_SCORE);
             game_mode = global_game_mode;
             glutTimerFunc(30*1000, resetScoreFactor, 0);
             return;
@@ -483,7 +485,7 @@ void testOptionClicked(int mouseX, int mouseY){
             //CHASER STUN OPTION CLICKED
             chaser1->vel = 0;
             chaser2->vel = 0;
-            modifyPowerStatus(ACTIVE);
+            modifyPowerStatus(CHASER_STUN);
             game_mode = global_game_mode;
             glutTimerFunc(30*1000, resetChaserVel, 0);
             return;
@@ -500,24 +502,24 @@ void testExitClicked(int mouseX, int mouseY){
     
 }
 void testTouch(){
-    if(fabs(chased1->x - player->x )<= 1*rocketScaleX && fabs(chased1->y-player->y)<=2*rocketScaleY){
-        SoundEngine->play2D("Resources/ding.wav", false);
-        score+=(score_factor*10);
-    }
-    if(fabs(chased2->x - player->x )<= 1*rocketScaleX && fabs(chased2->y-player->y)<=2*rocketScaleY){
-        SoundEngine->play2D("Resources/ding.wav", false);
-        score+=(score_factor*10);
-    }
+    //caught a rocket
+    testChased(chased1);
+    testChased(chased2);
     
+    //got caught by a rocket
     if(fabs(chaser1->x - player->x )<= 1*rocketScaleX && fabs(chaser1->y-player->y)<=2*rocketScaleY){
         
         if(game_mode==TIME_GAME)
         {
             SoundEngine->play2D("Resources/smash.mp3", false);
             score-=(score_factor*10);
+            chaser1->x = chaser1->initialX;
+            chaser1->y = chaser1->initialY;
+            
         }
         else
         {
+            SoundEngine->play2D("Resources/smash.mp3", false);
             game_mode=GAME_OVER;
             return;
         }
@@ -527,14 +529,28 @@ void testTouch(){
         {
             SoundEngine->play2D("Resources/smash.mp3", false);
             score-=(score_factor*10);
+            chaser2->x = chaser2->initialX;
+            chaser2->y = chaser2->initialY;
+            
         }
         else
         {
+            SoundEngine->play2D("Resources/smash.mp3", false);
             game_mode=GAME_OVER;
             return;
         }
     }
 }
+void testChased(Chased *chased){
+    if(fabs(chased->x - player->x )<= 1*rocketScaleX && fabs(chased->y-player->y)<=2*rocketScaleY){
+        SoundEngine->play2D("Resources/ding.wav", false);
+        score+=(score_factor*10);
+        //realocated to center of screen
+        chased->x = 500;
+        chased->y = 350;
+    }
+}
+
 void testPowerClicked(int mouseX, int mouseY){
     if(mouseX>600 && mouseX<720 && mouseY>650 && mouseY<700){
         game_mode = SPECIAL_POWER;
@@ -561,18 +577,23 @@ void passM(int mouseX,int mouseY)
         double winW =glutGet(GLUT_WINDOW_WIDTH);
         mouseX  = mouseX/winW*1024;
         mouseY= 720 - (mouseY/winH*720);
+        
         player->rotate(mouseX, mouseY);
         player->translate(mouseX, mouseY);
-        chaser1->translate(player->x, player->y);
-        chaser1->rotate(player->x, player->y);
-        chaser2->translate(player->x, player->y);
-        chaser2->rotate(player->x, player->y);
+        
+        if(power_status!=CHASER_STUN)
+        {
+            chaser1->translate(player->x, player->y);
+            chaser1->rotate(player->x, player->y);
+            chaser2->translate(player->x, player->y);
+            chaser2->rotate(player->x, player->y);
+        }
+        
         chased1->translate(player->x, player->y);
         chased1->rotate(player->x, player->y);
         chased2->translate(player->x, player->y);
         chased2->rotate(player->x, player->y);
 
-        //    translateChased();
         glutPostRedisplay();
         
     }
@@ -607,6 +628,7 @@ void anim(){
         testTouch();
     }
     glutPostRedisplay();
+
 }
 
 /*--------------------END--------------------*/
