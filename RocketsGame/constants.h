@@ -25,4 +25,6 @@ const int GAME_DURATION = 5; //in minutes
 
 const int INITIAL_SCORE = 2000;
 
+const int activateSP = 10;
+
 #endif /* constants_h */

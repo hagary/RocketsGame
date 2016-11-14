@@ -297,7 +297,7 @@ void drawTime(){
     long totalSecs = long((glutGet(GLUT_ELAPSED_TIME)-timeSinceStart)/1000);
     int secsCount = totalSecs%60;
     int minsCount = int(totalSecs/60);
-    if(totalSecs == 30){ //30 secs passed since game start
+    if(totalSecs == activateSP){ //activate special power
         game_mode = SPECIAL_POWER;
         return;
     }
